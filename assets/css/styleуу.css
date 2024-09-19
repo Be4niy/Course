@@ -96,6 +96,7 @@ html {
 }
 
 .cta-button {
+    margin-right: 60px;
     padding: 10px 20px;
     border: none;
     cursor: pointer;
@@ -179,6 +180,8 @@ html {
 
 .feature-description {
     font-size: 14px;
+    text-decoration: none;
+    color: #000000;
 }
 
 .bottom-section {
@@ -204,6 +207,25 @@ html {
     align-items: start;
     margin: auto 0;
 }
+.container556 {
+   
+    padding: 30px;
+    border-radius: 8px;
+    /* box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); */
+    
+    text-align: center;
+}
+.buttons556 {
+    width: 100%;
+    padding: 12px;
+    background-color: #d4a373;
+    color: #1d1d1d;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 10px;
+}
 
 .bottom-logo {
     max-width: 150px;
@@ -220,6 +242,9 @@ html {
 .bottom-text1 {
     font-family: '', serif;
     font-size: 15px;
+    text-decoration: none;
+    color: #ffffff;
+    
 }
 
 .bottom-description {
@@ -2067,7 +2092,7 @@ html {
 
 .new-modal {
     display: none;
-    /* Изначально скрыто */
+  
     position: fixed;
     z-index: 1;
     left: 0;
@@ -2193,13 +2218,13 @@ body {
     line-height: 1.6;
 }
 
-/* Стили для кнопки и ее контейнера */
+
 .view-more-container {
     display: flex;
     justify-content: flex-start;
-    /* Выравнивание по левому краю */
+  
     width: 100%;
-    /* Занимаем всю ширину */
+  
 }
 
 .view-more-btn {
@@ -2262,7 +2287,7 @@ body {
 }
 
 .ImgLast {
-    width: 1440px;
+    width: 751px;
     height: 248px;
     object-fit: cover;
     margin-top: 80px;

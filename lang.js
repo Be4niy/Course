@@ -4,12 +4,12 @@ const langArr = {
     "ru": "адвокатский сервис",
   },
   "login": {
-    "en": "login",
-    "ru": "авторизация",
+    "en": "logout",
+    "ru": "Выйти",
   },
   "register": {
-    "en": "register",
-    "ru": "регистрация",
+    "en": "them",
+    "ru": "Поменять тему",
   },
   "book": {
     "en": "book a consultation",
@@ -676,6 +676,10 @@ const langArr = {
   "folow": {
     "en": "Follow",
     "ru": "Следовать",
+  },
+  "attorney1": {
+    "en": "attorney",
+    "ru": "Адвокат",
   },
 
 

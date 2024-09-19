@@ -186,6 +186,8 @@ function changeLanguage() {
     document.querySelector('.lng-victor').innerHTML = langArr['victor'][hash]
     document.querySelector('.lng-web').innerHTML = langArr['web'][hash]
     document.querySelector('.lng-folow').innerHTML = langArr['folow'][hash]
+    document.querySelector('.lng-attorney1').innerHTML = langArr['attorney1'][hash]
+
 
 
 

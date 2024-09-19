@@ -31,61 +31,28 @@
                     </nav>
                     <div class="cta-container">
                         <section>
+                            <div class="container556">
+                               
+                                <button class="buttons556 lng-login" id="logoutButton">Logout</button>
+                            </div>
+
+                           
     
 
-                            <button class="lng-register" onclick="openModal('registerModal')">Register</button>
-    <button onclick="openModal('loginModal')">Логин</button>
-    <button class="lng-login" id="adminButton" onclick="openModal('usersModal')" style="display: none;">Пользователи</button>
-
-    <div id="registerModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('registerModal')">&times;</span>
-            <h2>Регистрация</h2>
-            <form onsubmit="register(event)">
-                <input type="text" id="registerUsername" placeholder="Имя пользователя" required>
-                <input type="password" id="registerPassword" placeholder="Пароль" required>
-                <div class="slider">
-                    <input type="checkbox" id="registerRole">
-                    <label for="registerRole">Admin</label>
-                </div>
-                <button type="submit">Зарегистрироваться</button>
-                <p class="error" id="registerError"></p>
-            </form>
-        </div>
-    </div>
-
-    <div id="loginModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('loginModal')">&times;</span>
-            <h2>Логин</h2>
-            <input type="text" id="loginUsername" placeholder="Имя пользователя">
-            <input type="password" id="loginPassword" placeholder="Пароль">
-            <button onclick="login()">Войти</button>
-            <p class="error" id="loginError"></p>
-        </div>
-    </div>
-
-    <div id="usersModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('usersModal')">&times;</span>
-            <h2>Пользователи</h2>
-            <ul id="userList"></ul>
-        </div>
-    </div>
-
-    <script src="lgreg.js"></script>
-    <button id="theme-toggle">Переключить тему</button>
-    <script src="dark.js"></script>
+    <script src="logoutt.js"></script>
+   
+    
                         </section>
                         <button class="cta-button lng-book " id="bookConsultation">Book A Consultation</button>
 
                     </div>
                 </header>
                 <div class="partner-logos" id="navMenu">
-                    <h2 class="bottom-text1 lng-home">Home</h2>
-                    <h2 class="bottom-text1 lng-about">About Us</h2>
-                    <h2 class="bottom-text1 lng-pages">Pages</h2>
-                    <h2 class="bottom-text1 lng-contact">Contact Us</h2>
+                    <a href="Index2.html" class="bottom-text1 lng-home">Home</a>
+                    <a href="aboutUS.html" class="bottom-text1 lng-about">About Us</a>
+                    <a href="pages.html" class="bottom-text1 lng-pages">Pages</a>
+                    <a href="ContactUs.html" class="bottom-text1 lng-contact">Contact Us</a>
+                    <button class="lng-register" id="theme-toggle">Theme</button>
                     
 
                 </div>
@@ -99,7 +66,7 @@
 
                 </select>
 
-
+                <script src="dark.js"></script>
                 <section class="partners-section">
                     <div class="features-container">
                         <div class="feature">
@@ -1040,7 +1007,7 @@
                 }
             </style>
         </head>
-        <body>
+        <section>
             <div id="map"></div>
             <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
             <script>
@@ -1074,11 +1041,8 @@
                     console.error("Ваш браузер не поддерживает геолокацию.");
                 }
             </script>
-        </body>
+        </section>
         </html>
-
-
-
     </body>
 
 </html>

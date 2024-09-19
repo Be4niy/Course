@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Page</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            background-color: #2c2c2c;
+            color: #f0e6d2;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #1d1d1d;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            width: 350px;
+            position: relative;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        .input-group label {
+            margin-bottom: 5px;
+            display: block;
+            font-weight: bold;
+            color: #f0e6d2;
+        }
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #444;
+            border-radius: 5px;
+            background-color: #333;
+            color: #f0e6d2;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #d4a373;
+            color: #1d1d1d;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        button:disabled {
+            background-color: #666;
+            cursor: not-allowed;
+        }
+        .hidden {
+            display: none;
+        }
+        .error {
+            color: #e63946;
+            font-size: 12px;
+        }
+        #closeButton {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: #f0e6d2;
+            font-size: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <button id="startButton">Start Registration</button>
+    <button id="loginButton" class="hidden">Login</button>
+
+    <div id="registrationForm" class="hidden">
+        <button id="closeButton">&times;</button>
+        <div class="input-group">
+            <label for="phone">Phone Number</label>
+            <input type="text" id="phone" placeholder="+375XXXXXXXXX">
+            <div id="phoneError" class="error hidden">Invalid phone number.</div>
+        </div>
+
+        <div class="input-group">
+            <label for="email">Email</label>
+            <input type="email" id="email">
+            <div id="emailError" class="error hidden">Invalid email address.</div>
+        </div>
+
+        <div class="input-group">
+            <label for="birthdate">Date of Birth</label>
+            <input type="date" id="birthdate">
+            <div id="birthdateError" class="error hidden">You must be at least 16 years old.</div>
+        </div>
+
+        <div class="input-group">
+            <label for="passwordChoice">Password Choice</label>
+            <select id="passwordChoice">
+                <option value="auto">Automatic</option>
+                <option value="manual">Manual</option>
+            </select>
+        </div>
+
+        <div id="manualPasswordFields" class="hidden">
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password">
+            </div>
+            <div class="input-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword">
+                <div id="passwordError" class="error hidden">Passwords do not match.</div>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <input type="checkbox" id="showPasswords">
+            <label for="showPasswords">Show Passwords</label>
+        </div>
+
+        <div class="input-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" placeholder="Surname Name Patronymic">
+            <div id="nameError" class="error hidden">Name is required.</div>
+        </div>
+
+        <div class="input-group">
+            <label for="nickname">Nickname</label>
+            <input type="text" id="nickname" readonly>
+            <button id="generateNickname">Generate Nickname</button>
+            <div id="nicknameError" class="error hidden">Failed to generate a nickname.</div>
+        </div>
+
+        <div class="input-group">
+            <input type="checkbox" id="isAdmin">
+            <label for="isAdmin">Register as Admin</label>
+        </div>
+
+        <div class="input-group">
+            <input type="checkbox" id="agree">
+            <label for="agree">I have read the User Agreement</label>
+            <div id="agreeError" class="error hidden">You must agree to the terms.</div>
+        </div>
+
+        <button id="registerButton" disabled>Register</button>
+    </div>
+
+    <div id="adminSection" class="hidden">
+        <button id="showUsersButton">Show Users</button>
+        <ul id="users" class="hidden"></ul>
+        <button id="externalLinkButton">Go to Another Site</button>
+        <button id="logoutButton">Logout</button>
+    </div>
+</div>
+
+<script>
+    const startButton = document.getElementById('startButton');
+    const registrationForm = document.getElementById('registrationForm');
+    const registerButton = document.getElementById('registerButton');
+    const loginButton = document.getElementById('loginButton');
+    const adminSection = document.getElementById('adminSection');
+    const showUsersButton = document.getElementById('showUsersButton');
+    const usersList = document.getElementById('users');
+    const logoutButton = document.getElementById('logoutButton');
+    const externalLinkButton = document.getElementById('externalLinkButton');
+    const closeButton = document.getElementById('closeButton');
+
+    const phoneInput = document.getElementById('phone');
+    const emailInput = document.getElementById('email');
+    const birthdateInput = document.getElementById('birthdate');
+    const passwordChoice = document.getElementById('passwordChoice');
+    const passwordInput = document.getElementById('password');
+    const confirmPasswordInput = document.getElementById('confirmPassword');
+    const nameInput = document.getElementById('name');
+    const nicknameInput = document.getElementById('nickname');
+    const agreeInput = document.getElementById('agree');
+    const isAdminInput = document.getElementById('isAdmin');
+    const showPasswordsInput = document.getElementById('showPasswords');
+
+    const phoneError = document.getElementById('phoneError');
+    const emailError = document.getElementById('emailError');
+    const birthdateError = document.getElementById('birthdateError');
+    const passwordError = document.getElementById('passwordError');
+    const nameError = document.getElementById('nameError');
+    const nicknameError = document.getElementById('nicknameError');
+    const agreeError = document.getElementById('agreeError');
+
+    const manualPasswordFields = document.getElementById('manualPasswordFields');
+
+    let nicknameAttempts = 0;
+    const maxNicknameAttempts = 5;
+    let registeredUsers = [];
+
+    
+    startButton.addEventListener('click', () => {
+        registrationForm.classList.remove('hidden');
+        startButton.classList.add('hidden');
+        loginButton.classList.add('hidden');
+    });
+
+    
+    closeButton.addEventListener('click', () => {
+        registrationForm.classList.add('hidden');
+        startButton.classList.remove('hidden');
+    });
+
+    
+    passwordChoice.addEventListener('change', () => {
+        if (passwordChoice.value === 'manual') {
+            manualPasswordFields.classList.remove('hidden');
+        } else {
+            manualPasswordFields.classList.add('hidden');
+        }
+    });
+
+    
+    showPasswordsInput.addEventListener('change', () => {
+        const type = showPasswordsInput.checked ? 'text' : 'password';
+        if (passwordInput) passwordInput.type = type;
+        if (confirmPasswordInput) confirmPasswordInput.type = type;
+    });
+
+    
+    function generateNickname() {
+        const randomNickname = `user${Math.floor(Math.random() * 10000)}`;
+        nicknameInput.value = randomNickname;
+    }
+
+    generateNickname();
+    document.getElementById('generateNickname').addEventListener('click', () => {
+        if (nicknameAttempts < maxNicknameAttempts) {
+            generateNickname();
+            nicknameAttempts++;
+        } else {
+            nicknameInput.readOnly = false;
+        }
+    });
+
+   
+    function validateInputs() {
+        let valid = true;
+
+        
+        const phonePattern = /^\+375\d{9}$/;
+        if (!phonePattern.test(phoneInput.value)) {
+            phoneError.classList.remove('hidden');
+            valid = false;
+        } else {
+            phoneError.classList.add('hidden');
+        }
+
+      
+        if (!emailInput.value.includes('@')) {
+            emailError.classList.remove('hidden');
+            valid = false;
+        } else {
+            emailError.classList.add('hidden');
+        }
+
+       
+        const currentDate = new Date();
+        const birthDate = new Date(birthdateInput.value);
+        const age = currentDate.getFullYear() - birthDate.getFullYear();
+        if (age < 16 || isNaN(age)) {
+            birthdateError.classList.remove('hidden');
+            valid = false;
+        } else {
+            birthdateError.classList.add('hidden');
+        }
+
+       
+        if (passwordChoice.value === 'manual') {
+            const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,20}$/;
+            if (!passwordPattern.test(passwordInput.value) || passwordInput.value !== confirmPasswordInput.value) {
+                passwordError.classList.remove('hidden');
+                valid = false;
+            } else {
+                passwordError.classList.add('hidden');
+            }
+        }
+
+       
+        if (nameInput.value.trim() === '') {
+            nameError.classList.remove('hidden');
+            valid = false;
+        } else {
+            nameError.classList.add('hidden');
+        }
+
+     
+        if (!agreeInput.checked) {
+            agreeError.classList.remove('hidden');
+            valid = false;
+        } else {
+            agreeError.classList.add('hidden');
+        }
+
+        registerButton.disabled = !valid;
+    }
+
+    phoneInput.addEventListener('input', validateInputs);
+    emailInput.addEventListener('input', validateInputs);
+    birthdateInput.addEventListener('input', validateInputs);
+    passwordInput.addEventListener('input', validateInputs);
+    confirmPasswordInput.addEventListener('input', validateInputs);
+    nameInput.addEventListener('input', validateInputs);
+    agreeInput.addEventListener('change', validateInputs);
+
+    
+    registerButton.addEventListener('click', () => {
+        const user = {
+            phone: phoneInput.value,
+            email: emailInput.value,
+            birthdate: birthdateInput.value,
+            nickname: nicknameInput.value,
+            role: isAdminInput.checked ? 'admin' : 'user',
+            name: nameInput.value
+        };
+
+        registeredUsers.push(user);
+        alert('Registration successful!');
+        registrationForm.classList.add('hidden');
+        loginButton.classList.remove('hidden');
+        startButton.classList.remove('hidden');
+    });
+
+   
+    loginButton.addEventListener('click', () => {
+        const nickname = prompt('Enter your nickname:');
+        const password = prompt('Enter your password:');
+
+        const user = registeredUsers.find(u => u.nickname === nickname);
+        if (user) {
+            alert(`Welcome, ${user.name}!`);
+            adminSection.classList.remove('hidden');
+            if (user.role !== 'admin') {
+                showUsersButton.classList.add('hidden');
+            } else {
+                showUsersButton.classList.remove('hidden');
+            }
+            loginButton.classList.add('hidden');
+        } else {
+            alert('Invalid credentials!');
+        }
+    });
+
+ 
+    showUsersButton.addEventListener('click', () => {
+        usersList.innerHTML = registeredUsers.map(u => `<li>${u.name} (${u.role})</li>`).join('');
+        usersList.classList.toggle('hidden');
+    });
+
+   
+    logoutButton.addEventListener('click', () => {
+        adminSection.classList.add('hidden');
+        startButton.classList.remove('hidden');
+        loginButton.classList.remove('hidden');
+    });
+
+   
+    externalLinkButton.addEventListener('click', () => {
+        window.location.href = 'Index2.html'; 
+    });
+
+</script>
+
+</body>
+</html>
